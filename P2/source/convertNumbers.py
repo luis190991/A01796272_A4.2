@@ -1,29 +1,43 @@
+"""
+Convert integers from a file to binary and hexadecimal representations.
+
+Reads a text file from the command line, converts each valid integer to
+binary and hexadecimal using basic algorithms (no bin/hex), prints results
+to screen, and writes them to ConvertionResults.txt.
+"""
+
+# pylint: disable=invalid-name
+
 import sys
 import time
 
 
 def read_integers(filename):
+    """Read integers from a file and ignore invalid data."""
     numbers = []
-    with open(filename, "r") as file:
+    with open(filename, "r", encoding="utf-8") as file:
         for line_number, line in enumerate(file, start=1):
             raw = line.strip()
+
             if raw == "":
                 print(f"Invalid data at line {line_number}: (empty)")
                 continue
+
             try:
-                # Requerimiento menciona "numbers" como tipo pero para conversión base 2/16 lo mejor es entero
-                n = int(raw)
-                numbers.append(n)
+                numbers.append(int(raw))
             except ValueError:
                 print(f"Invalid data at line {line_number}: {raw}")
+
     return numbers
 
 
-def to_binary(n):
-    if n == 0:
+def to_binary(value):
+    """Convert an integer to its binary representation using basic algorithms."""
+    if value == 0:
         return "0"
 
     sign = ""
+    n = value
     if n < 0:
         sign = "-"
         n = -n
@@ -37,11 +51,13 @@ def to_binary(n):
     return sign + "".join(digits)
 
 
-def to_hex(n):
-    if n == 0:
+def to_hex(value):
+    """Convert an integer to its hexadecimal representation using basic algorithms."""
+    if value == 0:
         return "0"
 
     sign = ""
+    n = value
     if n < 0:
         sign = "-"
         n = -n
@@ -57,6 +73,7 @@ def to_hex(n):
 
 
 def main():
+    """Main program execution."""
     if len(sys.argv) != 2:
         print("Usage: python convertNumbers.py fileWithData.txt")
         sys.exit(1)
@@ -75,10 +92,10 @@ def main():
     lines.append(header)
     lines.append("-" * len(header))
 
-    for n in numbers:
-        b = to_binary(n)
-        h = to_hex(n)
-        lines.append(f"{n} -> {b} | {h}")
+    for number in numbers:
+        binary_value = to_binary(number)
+        hex_value = to_hex(number)
+        lines.append(f"{number} -> {binary_value} | {hex_value}")
 
     elapsed = time.time() - start_time
     lines.append("")
@@ -88,7 +105,7 @@ def main():
 
     print(result)
 
-    with open("../results/ConvertionResults.txt", "w") as out:
+    with open("../results/ConvertionResults.txt", "w", encoding="utf-8") as out:
         out.write(result + "\n")
 
 

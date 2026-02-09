@@ -1,10 +1,19 @@
+"""
+Compute descriptive statistics from a file of numbers.
+
+This program reads numeric values from a file and calculates
+mean, median, mode, variance, and standard deviation using
+basic algorithms only.
+"""
+# pylint: disable=invalid-name
 import sys
 import time
 
 
 def read_numbers(filename):
+    """Read numbers from a file and ignore invalid data."""
     numbers = []
-    with open(filename, "r") as file:
+    with open(filename, "r", encoding="utf-8") as file:
         for line_number, line in enumerate(file, start=1):
             try:
                 numbers.append(float(line.strip()))
@@ -13,16 +22,26 @@ def read_numbers(filename):
     return numbers
 
 
+def count(numbers):
+    """Count how many numbers are in the list."""
+    total = 0
+    for _ in numbers:
+        total += 1
+    return total
+
+
 def mean(numbers):
+    """Calculate the mean of a list of numbers."""
     total = 0
     for n in numbers:
         total += n
-    return total / len(numbers)
+    return total / count(numbers)
 
 
 def median(numbers):
+    """Calculate the median of a list of numbers."""
     sorted_nums = sorted(numbers)
-    n = len(sorted_nums)
+    n = count(sorted_nums)
     mid = n // 2
 
     if n % 2 == 0:
@@ -31,34 +50,36 @@ def median(numbers):
 
 
 def mode(numbers):
+    """Calculate the mode of a list of numbers."""
     freq = {}
     for n in numbers:
         freq[n] = freq.get(n, 0) + 1
 
-    max_count = max(freq.values())
-    modes = [k for k, v in freq.items() if v == max_count]
+    max_count = 0
+    mode_value = None
+    for number, times in freq.items():
+        if times > max_count:
+            max_count = times
+            mode_value = number
 
-    return modes[0]  # se regresa la primer moda
+    return mode_value
 
 
 def variance(numbers, mean_value):
+    """Calculate the variance of a list of numbers."""
     total = 0
     for n in numbers:
         total += (n - mean_value) ** 2
-    return total / len(numbers)
+    return total / count(numbers)
 
 
-def std_dev(variance_value):
+def standard_deviation(variance_value):
+    """Calculate the standard deviation."""
     return variance_value ** 0.5
-
-def count(numbers):
-    total = 0
-    for _ in numbers:
-        total += 1
-    return total
 
 
 def main():
+    """Main program execution."""
     if len(sys.argv) != 2:
         print("Usage: python computeStatistics.py fileWithData.txt")
         sys.exit(1)
@@ -77,7 +98,7 @@ def main():
     median_value = median(numbers)
     mode_value = mode(numbers)
     variance_value = variance(numbers, mean_value)
-    std_dev_value = std_dev(variance_value)
+    std_dev_value = standard_deviation(variance_value)
 
     elapsed_time = time.time() - start_time
 
@@ -93,7 +114,7 @@ def main():
 
     print(result)
 
-    with open("../results/StatisticsResults.txt", "w") as output:
+    with open("../results/StatisticsResults.txt", "w", encoding="utf-8") as output:
         output.write(result)
 
 

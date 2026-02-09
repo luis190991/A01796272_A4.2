@@ -201,4 +201,4 @@ Number -> Binary | Hexadecimal
 858440 -> 11010001100101001000 | D1948
 2250854 -> 1000100101100001100110 | 225866
 
-Elapsed Time: 0.001169 seconds
+Elapsed Time: 0.001241 seconds
