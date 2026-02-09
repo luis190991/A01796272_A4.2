@@ -114,8 +114,15 @@ def main():
 
     print(result)
 
-    with open("../results/StatisticsResults.txt", "w", encoding="utf-8") as output:
-        output.write(result)
+    with open("../results/StatisticsResults.txt", "a", encoding="utf-8") as output:
+        output.write(
+            "\n"
+            "==============================\n"
+            f"Archivo de entrada: {filename}\n"
+            "------------------------------\n"
+            f"{result}\n"
+        )
+
 
 
 if __name__ == "__main__":

@@ -82,8 +82,14 @@ def main():
 
     print(result)
 
-    with open("../results/WordCountResults.txt", "w", encoding="utf-8") as out:
-        out.write(result + "\n")
+    with open("../results/WordCountResults.txt", "a", encoding="utf-8") as output:
+        output.write(
+            "\n"
+            "==============================\n"
+            f"Archivo de entrada: {filename}\n"
+            "------------------------------\n"
+            f"{result}\n"
+        )
 
 
 if __name__ == "__main__":
