@@ -22,23 +22,7 @@ Además, se verificó la calidad del código mediante la herramienta **pylint**,
 
 ## 🗂 Estructura del Repositorio
 
-A01796272_A4.2/
-├── P1/
-│   ├── source/
-│   ├── results/
-│   └── tests/
-├── P2/
-│   ├── source/
-│   ├── results/
-│   └── tests/
-├── P3/
-│   ├── source/
-│   ├── results/
-│   └── tests/
-├── .pylintrc
-├── environment.yml
-└── README.md
-
+![Estructura del Repositorio](static/img/file_struct.png)
 
 ---
 
